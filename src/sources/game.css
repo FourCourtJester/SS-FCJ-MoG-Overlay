@@ -145,7 +145,7 @@
 }
 
 /* the tournament's name, when it has no wide logo: the logo's box, the name shrunk to fit.
-   Libre Baskerville capitals, as the Sample Cup art set the look (user, 2026-11-17). */
+   Libre Baskerville capitals, as the tournament art we mocked up set the look (user, 2026-11-17). */
 .mog-game-crest-name {
   position: absolute;
   left: 960px;

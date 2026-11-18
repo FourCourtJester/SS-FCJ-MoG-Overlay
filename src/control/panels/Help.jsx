@@ -188,7 +188,7 @@ export default function Help() {
 
         <Q q="Where does the tournament go?">
           <P>
-            Set it on the <b>Tournament</b> panel, then press <b>Show Logo</b> once its logo is in. The switch is for the logo alone, everywhere at once, and
+            Set it on the <b>Tournament</b> panel, then press <b>Show Tournament Logo</b> once its logo is in. The switch is for the logo alone, everywhere at once, and
             starts off: hidden, every place shows its fallback instead (below), never an empty space.
           </P>
           <P>
@@ -197,6 +197,14 @@ export default function Help() {
           </P>
           <P>
             No logo is fine. The matchup shows the game&rsquo;s knot instead, and the Game scene shows the <b>tournament name</b> where the wide logo would be.
+          </P>
+        </Q>
+
+        <Q q="What about the teams' logos?">
+          <P>
+            Pick them on the <b>Teams</b> panel, then press <b>Show Team Logos</b> on the Tournament panel. Like the tournament&rsquo;s switch it starts off
+            and covers every graphic at once: hidden, the matchup, the Game corners and Victory drop the logo and its backdrop, and the team name takes the
+            room. Shown, a team with no logo, or one whose file has gone, gets the game&rsquo;s monogram.
           </P>
         </Q>
 

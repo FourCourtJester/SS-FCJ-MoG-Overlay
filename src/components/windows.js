@@ -14,12 +14,13 @@
 // too sharp" but for the scuffed edge). The pair mirrors it: each into its inner corner.
 //
 // `plate` is the end of the bottom edge the name plate sits at: by default the end away
-// from the scuffed edge, but every camera now puts it over the scuffed end instead, clear of
-// its border's corner - so the pair's plates are at their outer ends.
+// from the scuffed edge, but the pair put it over the scuffed end instead, clear of their
+// border's corner - so their plates are at their outer ends. Solo's is 'center', in the
+// middle of its bottom edge (user, 2026-11-18): one camera alone, centred on screen.
 export const WINDOWS = {
   camLeft: { label: 'Webcams Duo, left camera', x: 72, y: 297, w: 848, h: 477, rough: 'left', border: 'bottom-right', plate: 'left' },
   camRight: { label: 'Webcams Duo, right camera', x: 1000, y: 297, w: 848, h: 477, rough: 'right', border: 'bottom-left', plate: 'right' },
-  camSolo: { label: 'Webcam Solo', x: 448, y: 247, w: 1024, h: 576, rough: 'left', border: 'bottom-right', plate: 'left' },
+  camSolo: { label: 'Webcam Solo', x: 448, y: 247, w: 1024, h: 576, rough: 'left', border: 'bottom-right', plate: 'center' },
 }
 
 export const maskOf = (window) => `masks/window-rough-${window.rough}.png`

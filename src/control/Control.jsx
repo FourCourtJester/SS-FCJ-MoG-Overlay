@@ -4,7 +4,6 @@ import Cams from './panels/Cams'
 import Draft from './panels/Draft'
 import Help from './panels/Help'
 import Match from './panels/Match'
-import Sample from './panels/Sample'
 import Standby from './panels/Standby'
 import Teams from './panels/Teams'
 import Tournament from './panels/Tournament'
@@ -26,7 +25,6 @@ export default function Control() {
       <ScoreBar />
       {/* first: where a new operator starts, folded for everyone else */}
       <Help />
-      {import.meta.env.DEV ? <Sample /> : null}
       <Standby />
       <Cams />
       <Draft />

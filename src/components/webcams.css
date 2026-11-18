@@ -59,7 +59,7 @@
 
 /* across the window's bottom edge, half on and half off, at the end the window says
    (`plate` in components/windows.js): over the scuffed end, out of the way of the border's
-   corner - the pair's outer ends, so they mirror, and Solo's left */
+   corner - the pair's outer ends, so they mirror - or centred, as Solo's is */
 .mog-cam-plate {
   position: absolute;
   bottom: -38px;
@@ -75,6 +75,10 @@
 }
 .mog-cam.plate-left .mog-cam-plate {
   left: 24px;
+}
+.mog-cam.plate-center .mog-cam-plate {
+  left: 50%;
+  translate: -50% 0;
 }
 
 .mog-cam-brush {

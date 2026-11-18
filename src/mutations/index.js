@@ -3,8 +3,4 @@
 // `ctx.now()` for time, and keep fetches and timers out (they belong in the worker).
 // ./examples.js has worked examples, and nothing imports it.
 
-import { demo } from './demo'
-
-export const mutations = {
-  ...demo,
-}
+export const mutations = {}

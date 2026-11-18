@@ -13,6 +13,14 @@ import { useVelcroValue } from '@single-studio/core'
 // toggle is, so the logo comes off everywhere at once rather than in the one scene somebody
 // remembered.
 
+// The teams' logos have a switch of their own, `toggles.show.team_logos` (user,
+// 2026-11-18), on the Tournament panel beside the tournament's, off by default too: an open
+// beta's teams mostly have no logo, and a row of monograms says so on air. Off, every place
+// a team's logo goes drops it, backdrop and all, and the name takes the room.
+
+/** Whether the teams' logos are shown, on every graphic at once. */
+export const useTeamLogos = () => !!useVelcroValue('toggles.show.team_logos')
+
 const SLOTS = { square: 'event.logo', wide: 'event.logo_wide' }
 
 /**

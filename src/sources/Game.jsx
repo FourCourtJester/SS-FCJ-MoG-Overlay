@@ -1,6 +1,7 @@
 import { useVelcroState, useVelcroValue } from '@single-studio/core'
 import { Image, Scene, Variable } from '@single-studio/core/source'
 
+import { useTeamLogos } from '../components/marks'
 import TeamLogo from '../components/TeamLogo'
 import './game.css'
 
@@ -13,12 +14,15 @@ import './game.css'
 // the bottom is no place for anything, since selecting a giant fills its middle and the
 // minimap its right.
 function Corner({ side }) {
+  const logos = useTeamLogos()
   return (
     <div className={`mog-game-corner ${side}`}>
       <div className="mog-game-brush mog-plate mog-brushed" />
-      <div className="mog-game-logo">
-        <TeamLogo side={side} className="mog-game-logo-img" />
-      </div>
+      {logos ? (
+        <div className="mog-game-logo">
+          <TeamLogo side={side} className="mog-game-logo-img" />
+        </div>
+      ) : null}
       <Variable className="mog-game-name mog-type" name={`${side}.name`} fallback={side === 'left' ? 'Blue team' : 'Red team'} fit />
       <div className="mog-game-score">
         <div className="mog-game-swatch mog-swatch" />
@@ -78,7 +82,7 @@ const CREST = (() => {
   return `polygon(${points.map(([x, y]) => `${x}px ${y}px`).join(', ')})`
 })()
 
-// What the piece shows: the WIDE logo while the board's Show Logo is on, else the
+// What the piece shows: the WIDE logo while the board's Show Tournament Logo is on, else the
 // tournament's name in Libre Baskerville capitals (user, 2026-11-17), else nothing at all.
 //
 // HIDE LOGO MEANS "USE THE NAME", not "hide the piece" (user, 2026-11-17): the switch is about

@@ -5,6 +5,7 @@ import sky from '../assets/backgrounds/sky.webp'
 import knotRule from '../assets/ornaments/knot-rule.png'
 import Embers from '../components/Embers'
 import { BY_SIZE, giantOf, portraitOf } from '../components/giants'
+import { useTeamLogos } from '../components/marks'
 import TeamLogo from '../components/TeamLogo'
 import './victory.css'
 
@@ -125,6 +126,7 @@ function Giant({ slug, depth, place, entry, order }) {
 }
 
 function Banner({ side }) {
+  const logos = useTeamLogos()
   return (
     <div className="mog-victory-banner">
       <div className="mog-victory-word">
@@ -133,10 +135,12 @@ function Banner({ side }) {
       </div>
       <img className="mog-victory-rule" src={knotRule} alt="" />
       <div className="mog-victory-team">
-        <div className="mog-victory-team-logo">
-          <div className="mog-victory-team-logo-back mog-plate" />
-          <TeamLogo side={side} className="mog-victory-team-logo-img" />
-        </div>
+        {logos ? (
+          <div className="mog-victory-team-logo">
+            <div className="mog-victory-team-logo-back mog-plate" />
+            <TeamLogo side={side} className="mog-victory-team-logo-img" />
+          </div>
+        ) : null}
         <div className="mog-victory-team-name">
           <Variable className="mog-type" name={`${side}.name`} fallback={side === 'left' ? 'Blue team' : 'Red team'} fit />
         </div>

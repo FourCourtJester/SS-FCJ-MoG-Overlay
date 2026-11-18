@@ -1,7 +1,7 @@
 import { useVelcroValue } from '@single-studio/core'
 import { Image, Variable } from '@single-studio/core/source'
 
-import { useTournamentMark } from './marks'
+import { useTeamLogos, useTournamentMark } from './marks'
 import TeamLogo from './TeamLogo'
 import knot from '../assets/ornaments/knot.png'
 import './matchup.css'
@@ -18,15 +18,18 @@ import './matchup.css'
 // the best-of, Standby its message.
 
 function Side({ side }) {
+  const logos = useTeamLogos()
   return (
     <div className={`mog-side ${side}`}>
       <div className="mog-side-plate">
         {/* the stroke on a layer of its own, behind: it mirrors for the right side, and
             never clips the name */}
         <div className="mog-side-brush mog-plate mog-brushed" />
-        <div className="mog-side-logo">
-          <TeamLogo side={side} className="mog-side-logo-img" />
-        </div>
+        {logos ? (
+          <div className="mog-side-logo">
+            <TeamLogo side={side} className="mog-side-logo-img" />
+          </div>
+        ) : null}
         <div className="mog-side-name">
           <Variable className="mog-type" name={`${side}.name`} fallback={side === 'left' ? 'Blue team' : 'Red team'} fit />
         </div>

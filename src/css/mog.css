@@ -35,8 +35,8 @@
   font-display: block;
 }
 
-/* Libre Baskerville, for the tournament's name: a serif in the spirit of the Sample Cup
-   art (user, 2026-11-17). From @fontsource/libre-baskerville (SIL Open Font Licence), but
+/* Libre Baskerville, for the tournament's name: a serif in the spirit of the
+   tournament art we mocked up (user, 2026-11-17). From @fontsource/libre-baskerville (SIL Open Font Licence), but
    declared here rather than through its stylesheet, which says `font-display: swap`: a
    fallback face flashing up before the real one is on air. `block`, as Sheepman. */
 @font-face {
