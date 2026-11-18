@@ -1,0 +1,307 @@
+/* The game scene's two corners. 1920 x 1080. */
+
+.mog-game-corner {
+  --corner-w: 500px;
+  position: absolute;
+  top: 0;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: var(--corner-w);
+  height: 84px;
+}
+/* blue: runs off the left edge, its inner end stopping short of the game's bar at x ~490 */
+.mog-game-corner.left {
+  left: -40px;
+  padding: 4px 18px 10px 58px;
+}
+/* red: the same, mirrored */
+.mog-game-corner.right {
+  right: -40px;
+  flex-direction: row-reverse;
+  padding: 4px 58px 10px 18px;
+}
+
+.mog-game-brush {
+  --brush-h: 108px;
+  position: absolute;
+  inset: -24px 0 0;
+  z-index: -1;
+}
+.mog-game-corner.right .mog-game-brush {
+  scale: -1 1;
+}
+
+.mog-game-logo {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+}
+.mog-game-logo-img {
+  width: 100%;
+  height: 100%;
+}
+
+.mog-game-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 36px;
+  font-weight: 700;
+}
+.mog-game-corner.right .mog-game-name {
+  text-align: right;
+}
+
+/* the series score, brushed on in the side's colour, beside the game's own team panel */
+.mog-game-score {
+  position: relative;
+  flex: none;
+  width: 72px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  font-size: 50px;
+  font-weight: 700;
+}
+.mog-game-swatch {
+  position: absolute;
+  inset: -2px -6px;
+}
+.mog-game-corner.left .mog-game-swatch {
+  --stroke-colour: var(--mog-side-left);
+}
+.mog-game-corner.right .mog-game-swatch {
+  --stroke-colour: var(--mog-side-right);
+  scale: -1 1;
+}
+.mog-game-score .mog-type {
+  position: relative;
+  padding-top: 3px;
+  text-shadow: 0 2px 0 rgb(0 0 0 / 0.4);
+}
+
+/* ─── The tournament's piece, under the game's centre panel ──────────────────────────
+   Drawn on the full canvas, its outline (clip-path, set in Game.jsx from the traced edges)
+   in the game's own coordinates. The panel's own colour, measured rgb(22 20 17), flat, so
+   nothing marks where the game's panel ends and ours begins. */
+.mog-game-crest {
+  position: absolute;
+  inset: 0;
+  background: rgb(22 20 17);
+  /* no entrance: the piece is part of the game's own panel, there from the first frame
+     (user, 2026-11-17). Only what is on it fades in, with the teams' names (below). */
+}
+/* Wear, matching the game's panel: stretched to see it, that panel is faintly mottled and
+   crossed by fine light scratches, a few shades off its base. So: soft generated noise for
+   the mottling (the plank texture had a wood grain the panel has not); the kit's hairline
+   strokes (Graphic_Texture_26, 27) as two
+   scratches in a pale warm grey. All of it is a few shades either side of the base, as
+   the game's is, and it sits over the gap's whole area; the piece's outline clips it. */
+.mog-game-crest-mottle {
+  position: absolute;
+  left: 830px;
+  top: 40px;
+  width: 260px;
+  height: 60px;
+  /* soft noise, as light blotches a few percent strong: the colour is the paper tone, the
+     alpha the noise squeezed into 0-4%, so the panel lightens a few shades in patches, as the
+     game's does, and never darkens */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045 0.07' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.8 0 0 0 0 0.72 0 0 0 0.09 -0.03'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.mog-game-crest-scratch {
+  position: absolute;
+  background: rgb(140 128 110);
+  opacity: 0.13;
+}
+.mog-game-crest-scratch.one {
+  left: 880px;
+  top: 52px;
+  width: 120px;
+  height: 40px;
+  -webkit-mask: url('../assets/strokes/scratch-27.png') center / 100% 100% no-repeat;
+  rotate: -8deg;
+}
+.mog-game-crest-scratch.two {
+  left: 975px;
+  top: 58px;
+  width: 92px;
+  height: 34px;
+  -webkit-mask: url('../assets/strokes/scratch-26.png') center / 100% 100% no-repeat;
+  scale: -1 1;
+  rotate: 12deg;
+}
+
+/* the logo in the body of the piece, between the clock's notch (y 53) and the bottom (94) */
+.mog-game-crest-logo {
+  position: absolute;
+  left: 960px;
+  top: 57px;
+  width: 172px;
+  height: 33px;
+  translate: -50% 0;
+}
+
+/* the tournament's name, when it has no wide logo: the logo's box, the name shrunk to fit.
+   Libre Baskerville capitals, as the Sample Cup art set the look (user, 2026-11-17). */
+.mog-game-crest-name {
+  position: absolute;
+  left: 960px;
+  top: 57px;
+  width: 172px;
+  height: 33px;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mog-serif);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mog-paper);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ─── The entrance ─────────────────────────────────────────────────────────────────
+   Each corner slides in diagonally from its own corner of the screen (user, 2026-11-17),
+   and once it is in place its contents fade up from the inside out: the score beside the
+   game's bar first, then the name, then the logo at the screen's edge. The tournament's
+   piece does not enter at all, being part of the game's panel; its name or logo fades up
+   as the teams' names start to. The minimap's tabs rise from 1s, as the corners' contents fade
+   up (Game.jsx: TABS_AT). It plays when the source loads, so "Shutdown source when not
+   visible" in OBS is what replays it on every cut to the scene. */
+@keyframes mog-game-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes mog-game-slide-left {
+  from {
+    translate: -100% -100%;
+  }
+}
+@keyframes mog-game-slide-right {
+  from {
+    translate: 100% -100%;
+  }
+}
+.mog-game-corner.left {
+  animation: mog-game-slide-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.mog-game-corner.right {
+  animation: mog-game-slide-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.mog-game-score {
+  animation: mog-game-in 0.35s ease-out 0.6s both;
+}
+.mog-game-name {
+  animation: mog-game-in 0.35s ease-out 0.78s both;
+}
+.mog-game-logo {
+  animation: mog-game-in 0.35s ease-out 0.96s both;
+}
+.mog-game-crest-name,
+.mog-game-crest-logo {
+  animation: mog-game-in 0.35s ease-out 0.78s both;
+}
+
+/* ─── The tabs, stacked on the minimap ──────────────────────────────────────────────
+   The box ends where the timer strip begins. The grey rises up out of it, then the orange
+   out of the grey (Game.jsx).
+
+   THE SOLID COLOUR SPANS THE TIMER STRIP (x 1626-1905), so the stack reads as part of it
+   (user, 2026-11-17); only the rough fringe at each end goes past. The strip measured
+   1624-1906; the tabs sit 2px inside it on the left and 1px on the right, set by eye on
+   air. The box is 9px wider each side (x 1617-1914) to hold the fringe. */
+.mog-game-tabs {
+  position: absolute;
+  left: 1617px;
+  width: 297px;
+  top: 640px;
+  height: 132px; /* to y 772, just over the timer strip */
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.mog-game-tabs-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+/* each tab rises within a slot of its own, from just below that slot's bottom edge; when,
+   by --delay (Game.jsx) */
+.mog-game-tab-slot {
+  overflow: hidden;
+}
+@keyframes mog-game-tab-rise {
+  from {
+    translate: 0 100%;
+  }
+}
+.mog-game-tab {
+  /* Rough at both ends, square along the top and bottom so the stack still sits on the
+     timer strip as one block (user, 2026-11-17).
+
+     NOT .mog-rough-left: that slices the kit's edge to the box's height, and a 1080px-tall
+     edge squeezed into 40px averages out to a straight line. Here the kit's rough-1 is
+     shown at 240px tall - a window onto a slice of it - which at this size reads as a
+     dry-brush edge. Each end looks at a different slice, and each tab at different ones
+     again, so no two ends are twins.
+
+     Measured at that size: the mask is empty for its first 6px, specked from there, and
+     90% solid by 15px. So each mask overhangs the box by 6px, which puts the specks in the
+     box's outer 9px - outside the strip - and the solid colour from the strip's end in.
+     Most of the fringe is faint; the denser part of it is the 3px or so nearest the strip.
+
+     Two masks, one an end, each 307px wide at that size and so wider than the box, and each
+     solid everywhere but its own end: INTERSECTED, so each trims only its own side. */
+  --slice: 30%;
+  --slice-end: 40%;
+  height: 40px;
+  -webkit-mask:
+    url('../assets/masks/rough-1-flip-h.png') -6px var(--slice) / auto 240px no-repeat,
+    url('../assets/masks/rough-1.png') calc(100% + 6px) var(--slice-end) / auto 240px no-repeat;
+  -webkit-mask-composite: source-in;
+  mask:
+    url('../assets/masks/rough-1-flip-h.png') -6px var(--slice) / auto 240px no-repeat,
+    url('../assets/masks/rough-1.png') calc(100% + 6px) var(--slice-end) / auto 240px no-repeat;
+  mask-composite: intersect;
+  animation: mog-game-tab-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--delay) both;
+  display: flex;
+  align-items: center;
+  /* Sheepman's capitals ride high in their line box: centred as a box, they measured 9px
+     from the top and 16px from the bottom. 3px over and none under brings them level. */
+  padding: 3px 14px 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.mog-game-tab .mog-type {
+  min-width: 0;
+  width: 100%;
+  /* white with a thin dark outline, as the game's own timer text under them (user,
+     2026-11-17). The stroke is drawn under the fill, so of its 5px only the outer 2.5px
+     shows: an outline round the letters rather than a line eating into them. */
+  color: #fff;
+  -webkit-text-stroke: 5px rgb(18 18 18);
+  paint-order: stroke fill;
+}
+/* TRANSLUCENT, as the timer strip is (user, 2026-11-17). The strip, sampled in the beta
+   against the bare ground just above it: (57,53,48) over (90,75,60), far greyer than the
+   ground it covers. A cool dark grey at 60% fits both: rgb(36 38 40 / 0.6). The orange
+   takes the same opacity. */
+.mog-game-tab.upper {
+  background: rgb(207 118 41 / 0.6);
+}
+.mog-game-tab.lower {
+  --slice: 75%;
+  --slice-end: 10%;
+  background: rgb(36 38 40 / 0.6);
+}

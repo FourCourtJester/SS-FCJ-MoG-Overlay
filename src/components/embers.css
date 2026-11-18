@@ -1,0 +1,35 @@
+/* Embers rising (Embers.jsx). Over a 1080 scene: each starts just under the bottom edge
+   and is gone by the top. */
+.mog-embers {
+  position: absolute;
+  pointer-events: none;
+}
+.mog-embers span {
+  position: absolute;
+  bottom: -20px;
+  border-radius: 50%;
+  background: #ffb36b;
+  box-shadow: 0 0 8px 2px rgb(255 140 50 / 0.7);
+  opacity: 0;
+  animation: mog-ember linear infinite;
+}
+.mog-embers span.team {
+  background: color-mix(in srgb, var(--team-bright) 70%, white);
+  box-shadow: 0 0 9px 2px var(--team-bright);
+}
+@keyframes mog-ember {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    translate: var(--drift) -1150px;
+  }
+}

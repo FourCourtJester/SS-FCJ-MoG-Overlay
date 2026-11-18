@@ -1,0 +1,299 @@
+/* The victory scene. 1920 x 1080. */
+
+.mog-victory {
+  /* the winner's colours; the brand's orange when there is no winner yet */
+  --team: var(--mog-orange);
+  --team-bright: #f0a050;
+  --team-deep: var(--mog-ember);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--mog-ink);
+}
+.mog-victory.left {
+  --team: var(--mog-side-left);
+  --team-bright: var(--mog-side-left-bright);
+  --team-deep: var(--mog-side-left-deep);
+}
+.mog-victory.right {
+  --team: var(--mog-side-right);
+  --team-bright: var(--mog-side-right-bright);
+  --team-deep: var(--mog-side-right-deep);
+}
+
+/* ─── The storm ──────────────────────────────────────────────────────────────────
+   Wider than the screen and drifting across it, slowly enough that nobody sees it move,
+   only that it is not still. Most of its own blue-green taken out, so the side's colour
+   can go on. */
+.mog-victory-sky {
+  position: absolute;
+  inset: -40px -220px;
+  background: center 70% / cover no-repeat;
+  filter: saturate(0.35) brightness(0.85) contrast(1.1);
+  animation: mog-victory-drift 70s ease-in-out infinite alternate;
+}
+@keyframes mog-victory-drift {
+  from {
+    transform: translateX(-160px) scale(1.04);
+  }
+  to {
+    transform: translateX(160px) scale(1.1);
+  }
+}
+
+/* the side's colour, laid over the storm's light and shade */
+.mog-victory-tint {
+  position: absolute;
+  inset: 0;
+  background: var(--team);
+  mix-blend-mode: color;
+  opacity: 0.75;
+}
+
+/* light breaking through behind the giants, turning */
+.mog-victory-rays {
+  position: absolute;
+  left: 50%;
+  top: 470px;
+  width: 2600px;
+  height: 2600px;
+  translate: -50% -50%;
+  background: repeating-conic-gradient(from 0deg, transparent 0deg 6deg, rgb(255 244 226 / 0.55) 8deg 9deg, transparent 11deg 17deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 3%, #000 24%, transparent 62%);
+  mask: radial-gradient(closest-side, transparent 3%, #000 24%, transparent 62%);
+  mix-blend-mode: soft-light;
+  opacity: 0.8;
+  animation: mog-victory-turn 160s linear infinite;
+}
+@keyframes mog-victory-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* the glow the giants stand in */
+.mog-victory-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 46% 40% at 50% 60%, var(--team-bright), transparent 70%), radial-gradient(ellipse 80% 55% at 50% 64%, var(--team), transparent 75%);
+  mix-blend-mode: screen;
+  opacity: 0.42;
+  animation: mog-victory-pulse 9s ease-in-out infinite alternate;
+}
+@keyframes mog-victory-pulse {
+  from {
+    opacity: 0.34;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* ─── The giants ─────────────────────────────────────────────────────────────────
+   Their feet are off the bottom of the frame, where every cutout in the kit stops. The
+   sides and the very top are feathered, for the few cut there too (Dreadnought's fist,
+   Kragg's shoulders, Solace's bell): a straight edge fades out rather than standing as
+   a line. */
+.mog-victory-giants {
+  position: absolute;
+  inset: 0;
+  /* its own stack, so the giants' order among themselves stays under the mist */
+  z-index: 1;
+}
+.mog-victory-giant {
+  position: absolute;
+  animation: mog-victory-rise 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rise-delay) both;
+}
+.mog-victory-giant img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+  transform-origin: 50% 100%;
+  /* a rim of the side's light, and the glow behind it */
+  filter: drop-shadow(0 0 1.5px var(--team-bright)) drop-shadow(0 0 28px color-mix(in srgb, var(--team) 70%, transparent)) brightness(0.92);
+  -webkit-mask:
+    linear-gradient(to right, transparent, #000 var(--fade, 7%), #000 calc(100% - var(--fade, 7%)), transparent),
+    linear-gradient(to bottom, transparent, #000 5%);
+  -webkit-mask-composite: source-in;
+  mask:
+    linear-gradient(to right, transparent, #000 var(--fade, 7%), #000 calc(100% - var(--fade, 7%)), transparent),
+    linear-gradient(to bottom, transparent, #000 5%);
+  mask-composite: intersect;
+  animation: mog-victory-breathe 8s ease-in-out var(--breathe-delay) infinite alternate;
+}
+/* the front pair in front; the back pair behind them and a shade dimmer, as further off,
+   with less of the side's light on them */
+.mog-victory-giant.front {
+  z-index: 3;
+}
+.mog-victory-giant.back {
+  z-index: 2;
+}
+.mog-victory-giant.back img {
+  filter: drop-shadow(0 0 1px color-mix(in srgb, var(--team-bright) 60%, transparent)) drop-shadow(0 0 22px color-mix(in srgb, var(--team) 55%, transparent))
+    brightness(0.72) saturate(0.85);
+}
+@keyframes mog-victory-rise {
+  from {
+    opacity: 0;
+    translate: 0 110px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes mog-victory-breathe {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.022;
+  }
+}
+
+/* the mist they stand in, hiding where every one of them stops */
+.mog-victory-mist {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 2;
+  height: 380px;
+  background:
+    linear-gradient(to bottom, transparent, color-mix(in srgb, var(--team-deep) 55%, transparent) 45%, var(--mog-ink) 92%),
+    radial-gradient(ellipse 60% 100% at 50% 100%, color-mix(in srgb, var(--team) 25%, transparent), transparent);
+}
+
+/* a dark sky over the banner, and a dark edge all round */
+.mog-victory::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(18 13 10 / 0.7), transparent 32%), radial-gradient(ellipse 75% 85% at 50% 55%, transparent 60%, rgb(18 13 10 / 0.75));
+}
+
+/* ─── Embers, rising ─────────────────────────────────────────────────────────────── */
+.mog-victory-embers {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+/* ─── The banner ─────────────────────────────────────────────────────────────────── */
+.mog-victory-banner {
+  position: absolute;
+  /* no round banner over it here (user, 2026-11-17): the word is the top of the screen */
+  inset: 64px 0 auto;
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mog-victory-word {
+  position: relative;
+  margin-top: 4px;
+  padding: 10px 90px 0;
+  animation: mog-victory-slam 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
+}
+.mog-victory-word .mog-type {
+  position: relative;
+  display: block;
+  font-size: 150px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  /* the trailing letter-spacing, given back so the word centres */
+  margin-right: -0.1em;
+  text-shadow:
+    0 4px 0 rgb(0 0 0 / 0.45),
+    0 0 40px color-mix(in srgb, var(--team-bright) 45%, transparent);
+}
+/* the side's colour, brushed on behind the word */
+.mog-victory-word-stroke {
+  --stroke-colour: var(--team);
+  position: absolute;
+  inset: 22px 0 -4px;
+  opacity: 0.92;
+}
+@keyframes mog-victory-slam {
+  from {
+    opacity: 0;
+    scale: 1.18;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.mog-victory-rule {
+  width: 560px;
+  margin-top: 6px;
+  opacity: 0.85;
+  animation: mog-victory-fade 0.6s ease-out 0.7s both;
+}
+
+/* the team's name straight on the sky, no plate behind it (user, 2026-11-17: charcoal
+   looked odd on the side's colour), and a shadow to hold it off; the logo alone keeps a
+   charcoal backdrop, brushed as a block, for a logo of any colour to sit on */
+.mog-victory-team {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 760px;
+  height: 92px;
+  margin-top: 4px;
+  padding: 0 70px 4px;
+  filter: drop-shadow(0 3px 2px rgb(0 0 0 / 0.5)) drop-shadow(0 4px 16px rgb(0 0 0 / 0.6));
+  animation: mog-victory-fade 0.6s ease-out 0.95s both;
+}
+.mog-victory-team-logo {
+  position: relative;
+  flex: none;
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+}
+.mog-victory-team-logo-back {
+  position: absolute;
+  /* the stroke has empty margins round it, so the box runs well past the logo */
+  inset: -30px -40px;
+  -webkit-mask: url('../assets/strokes/stroke-05.png') center / 100% 100% no-repeat;
+  mask: url('../assets/strokes/stroke-05.png') center / 100% 100% no-repeat;
+}
+.mog-victory-team-logo-img {
+  position: relative;
+}
+.mog-victory-team-logo-img {
+  width: 100%;
+  height: 100%;
+}
+.mog-victory-team-name {
+  /* over the logo's backdrop, whose ragged edge reaches towards it */
+  position: relative;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 540px;
+  font-size: 50px;
+  font-weight: 700;
+  padding-bottom: 4px;
+}
+
+@keyframes mog-victory-fade {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}

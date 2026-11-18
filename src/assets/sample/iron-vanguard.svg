@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Sample team: Iron Vanguard. A riveted steel shield, brass-rimmed, with a trench
+       helmet over crossed bayonets. Made for the studio's sample data, not a real team. -->
+  <defs>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a7b2bd"/>
+      <stop offset="0.55" stop-color="#6c7884"/>
+      <stop offset="1" stop-color="#3d464f"/>
+    </linearGradient>
+    <linearGradient id="helmet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7d8a6a"/>
+      <stop offset="1" stop-color="#47503b"/>
+    </linearGradient>
+  </defs>
+  <path d="M100 8 L184 34 V96 C184 150 146 180 100 196 C54 180 16 150 16 96 V34 Z" fill="#c9a25a"/>
+  <path d="M100 18 L174 41 V96 C174 144 140 170 100 185 C60 170 26 144 26 96 V41 Z" fill="#1d1611"/>
+  <path d="M100 26 L166 47 V96 C166 139 136 162 100 176 C64 162 34 139 34 96 V47 Z" fill="url(#steel)"/>
+  <g fill="#c9a25a">
+    <circle cx="46" cy="56" r="4"/><circle cx="154" cy="56" r="4"/>
+    <circle cx="46" cy="120" r="4"/><circle cx="154" cy="120" r="4"/>
+    <circle cx="100" cy="166" r="4"/>
+  </g>
+  <!-- crossed bayonets -->
+  <g stroke-linecap="round">
+    <g transform="rotate(-38 100 108)">
+      <rect x="96" y="36" width="8" height="112" rx="2" fill="#e6e9ec" stroke="#2a2420" stroke-width="2"/>
+      <path d="M96 36 L100 18 L104 36 Z" fill="#e6e9ec" stroke="#2a2420" stroke-width="2"/>
+      <rect x="88" y="120" width="24" height="7" rx="2" fill="#c9a25a"/>
+      <rect x="95" y="127" width="10" height="26" rx="3" fill="#5a3a22"/>
+    </g>
+    <g transform="rotate(38 100 108)">
+      <rect x="96" y="36" width="8" height="112" rx="2" fill="#e6e9ec" stroke="#2a2420" stroke-width="2"/>
+      <path d="M96 36 L100 18 L104 36 Z" fill="#e6e9ec" stroke="#2a2420" stroke-width="2"/>
+      <rect x="88" y="120" width="24" height="7" rx="2" fill="#c9a25a"/>
+      <rect x="95" y="127" width="10" height="26" rx="3" fill="#5a3a22"/>
+    </g>
+  </g>
+  <!-- the trench helmet: a shallow dome on a wide brim -->
+  <ellipse cx="100" cy="114" rx="60" ry="13" fill="#2a2420"/>
+  <ellipse cx="100" cy="111" rx="56" ry="10" fill="url(#helmet)"/>
+  <path d="M60 110 C60 70 140 70 140 110 Z" fill="url(#helmet)" stroke="#2a2420" stroke-width="3"/>
+  <path d="M72 96 C80 82 96 78 108 79" fill="none" stroke="#b9c4a6" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="100" cy="74" r="4" fill="#c9a25a"/>
+  <!-- a chevron of rank under it -->
+  <path d="M74 136 L100 150 L126 136" fill="none" stroke="#cf7629" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

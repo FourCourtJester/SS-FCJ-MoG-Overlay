@@ -1,0 +1,213 @@
+/*
+ * March of Giants: the house style every graphic shares.
+ *
+ * Taken from the creator kit (references/, cut by scripts/assets.sh):
+ *   - Sheepman, the kit's display face, for everything on air
+ *   - the logo's burnt orange, the key art's brass, and the charcoal of the plank
+ *     backgrounds
+ *   - shapes with ONE rough edge each, every other edge clean. The kit never tears a
+ *     shape all the way round, and neither do we.
+ */
+
+@font-face {
+  font-family: 'Sheepman';
+  src: url('../assets/fonts/Sheepman-Light.otf') format('opentype');
+  font-weight: 300;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Sheepman';
+  src: url('../assets/fonts/Sheepman-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Sheepman';
+  src: url('../assets/fonts/Sheepman-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Sheepman';
+  src: url('../assets/fonts/Sheepman-BoldSlanted.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: block;
+}
+
+/* Libre Baskerville, for the tournament's name: a serif in the spirit of the Sample Cup
+   art (user, 2026-11-17). From @fontsource/libre-baskerville (SIL Open Font Licence), but
+   declared here rather than through its stylesheet, which says `font-display: swap`: a
+   fallback face flashing up before the real one is on air. `block`, as Sheepman. */
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('../../node_modules/@fontsource/libre-baskerville/files/libre-baskerville-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-display: block;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('../../node_modules/@fontsource/libre-baskerville/files/libre-baskerville-latin-ext-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-display: block;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  /* the logo's own orange, and a burnt step down for under it */
+  --mog-orange: #cf7629;
+  --mog-ember: #8f4515;
+  /* the key art's brass: the laurels, the bell, the trim */
+  --mog-brass: #c9a25a;
+  /* charcoal, from the plank backgrounds: ink for the darkest, soot for plates */
+  --mog-ink: #120d0a;
+  --mog-soot: #1d1611;
+  --mog-smoke: #2b211a;
+  /* type on a dark plate: warm paper, never pure white */
+  --mog-paper: #f2e7d2;
+  --mog-ash: #a8998a;
+
+  /* The two sides, in the game's own colours: blue on the left, red on the right, as the
+     game draws its teams everywhere. Measured off the beta's HUD (user's footage,
+     2026-11-17): health bars #2DC7F9 / #FB2401, team panels #163968 / #6B2020.
+
+     --mog-side-* is a mid-tone of each, for a swatch with cream type on it: the HUD's own
+     blue is too light to carry it. --mog-side-*-bright is the HUD's colour exactly, for
+     thin accents beside the game's own. --mog-side-*-deep is its panels'. */
+  --mog-side-left: #2380c0;
+  --mog-side-right: #cc3418;
+  --mog-side-left-bright: #2dc7f9;
+  --mog-side-right-bright: #fb2401;
+  --mog-side-left-deep: #163968;
+  --mog-side-right-deep: #6b2020;
+
+  --mog-display: 'Sheepman', 'Arial Narrow', sans-serif;
+  /* the tournament's name: the one place a serif is used */
+  --mog-serif: 'Libre Baskerville', Georgia, serif;
+}
+
+/* ─── A plate: a dark panel with one rough edge ──────────────────────────────────
+   The rough edge comes from the kit's own masks, cropped so the edge is the image's
+   edge. `-webkit-mask-box-image` slices a mask as border-image slices a picture: the
+   rough strip keeps its depth while the clean middle stretches to any size. Chromium
+   spells it this way, and OBS's browser source is Chromium.
+
+   --rough is how deep the rough edge runs on screen. The kit's strips are 100-300px
+   deep at source size, so the slices below are those depths. */
+
+.mog-plate {
+  --rough: 34px;
+  position: relative;
+  /* the planks, small and mostly under charcoal: a grain to the plate, not a photo */
+  background:
+    linear-gradient(180deg, rgb(255 236 210 / 0.06), transparent 45%),
+    linear-gradient(rgb(18 13 10 / 0.72), rgb(18 13 10 / 0.72)),
+    url('../assets/backgrounds/planks-dark.webp') center / 960px auto,
+    var(--mog-soot);
+}
+
+/* torn along the bottom: the kit's roughest bar, its 308px rip kept whole */
+.mog-torn {
+  -webkit-mask-box-image: url('../assets/masks/torn-1.png') 0 0 308 0 / 0 0 var(--rough) 0 stretch;
+}
+/* torn along the top */
+.mog-torn-top {
+  -webkit-mask-box-image: url('../assets/masks/torn-1-flip-v.png') 308 0 0 0 / var(--rough) 0 0 0 stretch;
+}
+/* scuffed down the right */
+.mog-rough-right {
+  -webkit-mask-box-image: url('../assets/masks/rough-2.png') 0 86 0 0 / 0 var(--rough) 0 0 stretch;
+}
+/* scuffed down the left */
+.mog-rough-left {
+  -webkit-mask-box-image: url('../assets/masks/rough-2-flip-h.png') 0 0 0 86 / 0 0 0 var(--rough) stretch;
+}
+
+/* ─── A brush stroke, painted in any colour ──────────────────────────────────────
+   The kit's strokes are black on transparent. Used as a mask, the stroke's alpha is
+   the shape and the background is the colour, so one file serves every side. */
+.mog-stroke {
+  --stroke-colour: var(--mog-orange);
+  background: var(--stroke-colour);
+  -webkit-mask: url('../assets/strokes/stroke-08.png') center / 100% 100% no-repeat;
+  mask: url('../assets/strokes/stroke-08.png') center / 100% 100% no-repeat;
+}
+
+/* A charcoal swatch: the kit's tall block stroke, for a figure to sit on */
+.mog-swatch {
+  --stroke-colour: var(--mog-orange);
+  background: var(--stroke-colour);
+  -webkit-mask: url('../assets/strokes/stroke-05.png') center / 100% 100% no-repeat;
+  mask: url('../assets/strokes/stroke-05.png') center / 100% 100% no-repeat;
+}
+
+/* The display face. Sheepman is tall and narrow, so it is set in capitals and spaced. */
+.mog-type {
+  font-family: var(--mog-display);
+  color: var(--mog-paper);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+/* ─── A brushed plate: the whole panel painted in one charcoal stroke ──────────────
+   For panels too small for a torn edge to read. The kit's rip is drawn for full-width
+   banners, about 250px deep on screen; on a 96px plate it shrinks to a fuzzy line.
+   A stroke's ragged ends and edges stay coarse at any size. Stroke 04 is the densest
+   block in the kit: the scratchier ones let a bright picture through behind the text. */
+/* SLICED, NOT STRETCHED. Stretched whole, a long plate stretched the stroke's ragged ends
+   with it - a quarter of the width at the left - until they ate into the text. Sliced as
+   border-image slices a picture, the ends keep the stroke's own proportions and only the
+   solid middle stretches, so any width of plate has the same ends.
+
+   Stroke 04 at 1600 x 660 is ragged for 380px at its left end and 171px at its right
+   (measured: where a column is 85% solid). Rendered, each end keeps that width for its
+   height, so a plate says how tall it is in --brush-h (96px if it does not). */
+.mog-brushed {
+  -webkit-mask-box-image: url('../assets/strokes/stroke-04.png') 0 171 0 380 / 0 calc(var(--brush-h, 96px) * 171 / 660) 0 calc(var(--brush-h, 96px) * 380 / 660)
+    stretch;
+}
+
+/* ─── A window: where OBS puts a camera or a capture, under this source ─────────────
+   16:9, scuffed down one side and clean on the other three: the same edge as
+   public/masks/window-rough-*.png, which cuts the camera in OBS to match. Only drawn
+   when something is painted into it (?fill), since in a show the camera is the
+   picture. --rough scales with the window: 86px at 1080 tall in the kit. */
+.mog-window-rough-right {
+  -webkit-mask-box-image: url('../assets/masks/rough-2.png') 0 86 0 0 / 0 calc(var(--window-h) * 86 / 1080) 0 0 stretch;
+}
+.mog-window-rough-left {
+  -webkit-mask-box-image: url('../assets/masks/rough-2-flip-h.png') 0 0 0 86 / 0 0 0 calc(var(--window-h) * 86 / 1080) stretch;
+}
+
+/* ─── Loop: a video filling its box, over a still ───────────────────────────────── */
+.mog-loop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--mog-ink);
+}
+.mog-loop-still,
+.mog-loop-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── Crossfade: a layer fading in over the one before ───────────────────────────── */
+.mog-xfade {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--xfade, 900ms) ease-in-out;
+}
+.mog-xfade.in {
+  opacity: 1;
+}

@@ -1,4 +1,4 @@
-# My Studio
+# FCJ MoG Overlay
 
 A [Single Studio](https://fourcourtjester.github.io/Single-Studio/) broadcast
 graphics project: an operator's board that runs as a dock inside OBS, and one
@@ -10,8 +10,8 @@ and neither has to match anything on any server.
 Both names live in `src/studio/config.js`, which is the first file worth editing:
 
 ```js
-export const STUDIO_NAME = 'My Studio' // shown to people; change it any time
-export const STUDIO_ID = 'my-studio' // where the show is filed; changing it starts an empty one
+export const STUDIO_NAME = 'FCJ MoG Overlay' // shown to people; change it any time
+export const STUDIO_ID = 'ss-fcj-mog-overlay' // where the show is filed; changing it starts an empty one
 ```
 
 ## Run it

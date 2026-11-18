@@ -5,6 +5,9 @@
 @import 'tailwindcss';
 @import '@single-studio/core/styles.css';
 
+/* March of Giants' fonts, colours and rough-edged plates, shared by every graphic */
+@import './mog.css';
+
 /* Tailwind only scans files it knows about, and the framework's components live in
    node_modules. Without this their classes get stripped from the build. */
 @source '../../node_modules/@single-studio/core/dist';
@@ -16,3 +19,116 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    Your own CSS goes below.
    ───────────────────────────────────────────────────────────────────────────── */
+
+/* The score bar's steppers, at the board bar's size: a strip, not a panel's row. */
+.mog-score-stepper {
+  --ss-input-h: 1.75rem;
+}
+.mog-score-stepper .ss-stepper-value {
+  width: 2.5rem;
+  flex-grow: 0;
+  font-size: 1rem;
+}
+.mog-score-stepper button {
+  font-size: 1rem;
+}
+
+/* The jump menu: under 511px the bar is two lines, the menu over the score, so the menu
+   takes its whole line rather than sitting short at the left of it, and the score sits
+   in the middle of the line under it rather than at the right (user, 2026-11-17).
+   The window's width, not a container's: the bar is the window's width, dock or not. */
+/* A side's two bans on the Draft panel: side by side, one above the other only under the
+   same 511px line as the bar (user, 2026-11-18) - a studio Row would stack them until a
+   much wider board. */
+.mog-ban-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+@media (max-width: 510.98px) {
+  .mog-ban-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 510.98px) {
+  .mog-jump-group {
+    flex-basis: 100%;
+  }
+  .mog-jump {
+    width: 100%;
+  }
+  .mog-score-group {
+    flex-basis: 100%;
+    justify-content: center;
+  }
+}
+
+/* ─── Draft: the pick grids ─────────────────────────────────────────────────────────
+   ImageSelect lays its tiles out in a wrapping row, each as wide as its caption, so the
+   rows come out ragged. Here they are an even grid instead, every tile the same width,
+   with fewer to a row as the board narrows (user, 2026-11-17). Counted against the
+   panel's own width, not the window's, since the board is usually an OBS dock.
+   17 giants: one row of 17 when there is room, else rows of 9, 6, 5, 4 or 3. */
+.mog-picks {
+  container-type: inline-size;
+  --cols: 3;
+}
+@container (min-width: 19rem) {
+  .mog-picks [role='group'] {
+    --cols: 4;
+  }
+}
+@container (min-width: 26rem) {
+  .mog-picks [role='group'] {
+    --cols: 5;
+  }
+}
+@container (min-width: 32rem) {
+  .mog-picks [role='group'] {
+    --cols: 6;
+  }
+}
+@container (min-width: 46rem) {
+  .mog-picks [role='group'] {
+    --cols: 9;
+  }
+}
+@container (min-width: 80rem) {
+  .mog-picks [role='group'] {
+    --cols: 17;
+  }
+}
+.mog-picks [role='group'] {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+}
+.mog-picks .ss-image-select-option {
+  min-width: 0;
+}
+/* the caption may use the tile's whole width before it truncates */
+.mog-picks .ss-image-select-option > span:nth-child(2) {
+  max-width: 100%;
+}
+
+/* Each side's picks framed in its colour (user, 2026-11-17); red's picked in red too,
+   rather than the board's blue */
+.mog-picks.blue,
+.mog-picks.red {
+  border: 1px solid rgb(56 189 248 / 0.55);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem 0.75rem;
+}
+.mog-picks.red {
+  border-color: rgb(239 68 68 / 0.55);
+}
+.mog-picks.red .ss-image-select-option[aria-pressed='true'] {
+  border-color: rgb(239 68 68);
+  background: rgb(69 10 10 / 0.6);
+}
+.mog-picks.red .ss-image-select-option[aria-pressed='true'] > span:nth-child(2) {
+  color: rgb(254 202 202);
+}
+.mog-picks.red .ss-image-select-option > span:nth-child(3) {
+  background: rgb(220 38 38);
+}
