@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@fontsource/libre-baskerville": "^5.3.0",
-    "@single-studio/core": "^0.17.1",
-    "@single-studio/provider-supabase": "^0.17.1",
+    "@single-studio/core": "^0.18.0",
+    "@single-studio/provider-supabase": "^0.18.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.4",

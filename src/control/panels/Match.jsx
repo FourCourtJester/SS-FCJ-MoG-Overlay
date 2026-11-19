@@ -20,9 +20,10 @@ function Winner() {
   const press = (side) => mutate('set', { 'variables.victory.winner': winner === side ? '' : side })
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="mog-winner flex flex-col gap-1">
       <span className="text-xs font-medium tracking-wide text-slate-400 uppercase">Victory</span>
-      <div className="flex gap-2">
+      {/* one above the other on a narrow board, as the score is (index.css: .mog-winner) */}
+      <div className="mog-winner-buttons flex gap-2">
         {['left', 'right'].map((side) => (
           <button
             key={side}
