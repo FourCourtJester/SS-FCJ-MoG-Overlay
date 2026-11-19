@@ -50,6 +50,17 @@ const P = ({ children }) => <p className="text-sm leading-relaxed text-slate-300
 
 const Code = ({ children }) => <code className="text-slate-200">{children}</code>
 
+// A page to read, in a new window. As FCJ Heroes' Help: the source, the releases and the
+// issues are on GitHub, and Single Studio's own documentation is a link away.
+const A = ({ href, children }) => (
+  <a href={href} target="_blank" rel="noreferrer" className="text-sky-400 underline">
+    {children}
+  </a>
+)
+
+const REPO = 'https://github.com/FourCourtJester/SS-FCJ-MoG-Overlay'
+const STUDIO = 'https://fourcourtjester.github.io/Single-Studio'
+
 // A file an operator needs on disk, as a link to copy. An OBS dock has nowhere to save a
 // download - a `download` link in one appears to do nothing at all - and OBS's mask filter
 // wants a file path anyway, so the link goes into an ordinary browser and is saved from
@@ -188,8 +199,8 @@ export default function Help() {
 
         <Q q="Where does the tournament go?">
           <P>
-            Set it on the <b>Tournament</b> panel, then press <b>Show Tournament Logo</b> once its logo is in. The switch is for the logo alone, everywhere at once, and
-            starts off: hidden, every place shows its fallback instead (below), never an empty space.
+            Set it on the <b>Tournament</b> panel, then press <b>Show Tournament Logo</b> once its logo is in. The switch is for the logo alone, everywhere at
+            once, and starts off: hidden, every place shows its fallback instead (below), never an empty space.
           </P>
           <P>
             Its <b>logo</b> goes between the two scores on the matchup, the square one for choice and the wide one if that is all there is. In the Game scene it
@@ -202,9 +213,9 @@ export default function Help() {
 
         <Q q="What about the teams' logos?">
           <P>
-            Pick them on the <b>Teams</b> panel, then press <b>Show Team Logos</b> on the Tournament panel. Like the tournament&rsquo;s switch it starts off
-            and covers every graphic at once: hidden, the matchup, the Game corners and Victory drop the logo and its backdrop, and the team name takes the
-            room. Shown, a team with no logo, or one whose file has gone, gets the game&rsquo;s monogram.
+            Pick them on the <b>Teams</b> panel, then press <b>Show Team Logos</b> on the Tournament panel. Like the tournament&rsquo;s switch it starts off and
+            covers every graphic at once: hidden, the matchup, the Game corners and Victory drop the logo and its backdrop, and the team name takes the room.
+            Shown, a team with no logo, or one whose file has gone, gets the game&rsquo;s monogram.
           </P>
         </Q>
 
@@ -307,6 +318,23 @@ export default function Help() {
           <P>
             The message sits top left beside the logo, always; the clock slides in from the right while it runs and back out when it ends. Both stay in their
             corners, clear of the picture&rsquo;s centre. The <b>Clock label</b> is the words before the time: &ldquo;Back in&rdquo;, &ldquo;Starting in&rdquo;.
+          </P>
+        </Q>
+
+        <Group>More help</Group>
+
+        <Q q="Where are the source, the releases and the issues?">
+          <P>
+            On <A href={REPO}>GitHub</A>. Each version&rsquo;s changes are on <A href={`${REPO}/releases`}>the releases page</A>. Something wrong on air, or an
+            idea for the overlay: <A href={`${REPO}/issues`}>open an issue</A>.
+          </P>
+        </Q>
+
+        <Q q="Where can I read more about the board itself?">
+          <P>
+            The board and every graphic are built on <A href={STUDIO}>Single Studio</A>. Its <A href={`${STUDIO}/getting-started`}>getting started</A> tours
+            every control on the board; <A href={`${STUDIO}/data`}>your own data</A> covers the store and what Save does, and{' '}
+            <A href={`${STUDIO}/plugins`}>plugins</A> how a game or a feed is brought in.
           </P>
         </Q>
       </div>
