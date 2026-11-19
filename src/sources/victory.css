@@ -10,6 +10,16 @@
   overflow: hidden;
   isolation: isolate;
   background: var(--mog-ink);
+  /* in from nothing when the page loads (user, 2026-11-19): OBS shuts the source down
+     when hidden, so each cut to it is a fresh page, and a still of the storm sits under
+     it in OBS to cover the moment before it paints. Fading in over that still, rather
+     than appearing on top of it, hides the join. */
+  animation: mog-victory-in 0.6s ease-out both;
+}
+@keyframes mog-victory-in {
+  from {
+    opacity: 0;
+  }
 }
 .mog-victory.left {
   --team: var(--mog-side-left);

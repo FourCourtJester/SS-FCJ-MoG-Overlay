@@ -1,4 +1,5 @@
 import { useVelcroState, useVelcroValue } from '@single-studio/core'
+import { useEffect, useState } from 'react'
 import { Scene, Variable } from '@single-studio/core/source'
 
 import sky from '../assets/backgrounds/sky.webp'
@@ -39,7 +40,11 @@ import './victory.css'
 // the middle back giant boxed in by a front one either side, and leant the group right.)
 // Within each pair, the earlier pick is the one further left.
 //
-// Set the browser source to shut down when not visible, so the entrance plays each time.
+// Set the browser source to shut down when not visible, so the entrance plays each time,
+// and put an Image source under it in the scene: a still of this backdrop as it stands at
+// its first frame, kept with the OBS setup rather than in the build. A fresh page is
+// transparent until it paints, and without the still the scene shows black. The whole
+// graphic fades in over it (victory.css).
 
 // The four places, left to right, and the size of picture each starts from (see fit(),
 // below, for how each giant is then sized and set). Change the order of `depth` here to
@@ -75,6 +80,26 @@ function arrange(picks) {
     ...front.map((giant, i) => ({ ...giant, depth: 'front', place: places('front')[i], entry: i })),
     ...back.map((giant, i) => ({ ...giant, depth: 'back', place: places('back')[i], entry: 2 + i })),
   ]
+}
+
+// Whether the storm has arrived. The page is new on every cut to it (see above), so the
+// picture is fetched each time, and the fade-in would otherwise open on bare ink with the
+// storm landing part-way through. A failed load still lets the graphic in.
+function useSky() {
+  const [ready, setReady] = useState(false)
+  useEffect(() => {
+    let live = true
+    const image = new Image()
+    image.src = sky
+    image
+      .decode()
+      .catch(() => {})
+      .then(() => live && setReady(true))
+    return () => {
+      live = false
+    }
+  }, [])
+  return ready
 }
 
 const toList = (value) => (Array.isArray(value) ? value : value ? [value] : [])
@@ -153,10 +178,11 @@ export default function Victory() {
   const { value: winner, loaded } = useVelcroState('variables.victory.winner')
   const side = winner === 'left' || winner === 'right' ? winner : null
   const picks = arrange(toList(useVelcroValue(`variables.draft.${side ?? 'left'}.picks`)).slice(0, 4))
+  const skyReady = useSky()
 
   return (
     <Scene width={1920} height={1080}>
-      {loaded ? (
+      {loaded && skyReady ? (
         <div className={`mog-victory ${side ?? 'none'}`}>
           <div className="mog-victory-sky" style={{ backgroundImage: `url(${sky})` }} />
           <div className="mog-victory-tint" />
