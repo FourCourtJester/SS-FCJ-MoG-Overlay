@@ -1,25 +1,37 @@
-import Match from './panels/Match'
-import Scores from './panels/Scores'
+import { BoardBar, PanelJump } from '@single-studio/core/control'
 
-// The operator's board: which panels it has, and in what order.
+import Cams from './panels/Cams'
+import Draft from './panels/Draft'
+import Help from './panels/Help'
+import Match from './panels/Match'
+import Standby from './panels/Standby'
+import Teams from './panels/Teams'
+import Tournament from './panels/Tournament'
+import ScoreBar from './ScoreBar'
+
+// The operator's board for March of Giants.
 //
-// Panels live in ./panels, one per file. Add one there and list it here.
-//
-// Buttons write immediately. Anything you type stages until you save, so a
-// half-typed name never reaches air -- the save button and Ctrl+S are already on the
-// page, alongside the image store and the browser-source URLs to paste into OBS.
-//
-// To change several things with one click, write a mutation in
-// src/mutations/index.js and dispatch it:
-//
-//   const mutate = useVelcroMutate()
-//
-//   <button onClick={() => mutate('my:example', { team: 'home' })}>Big play</button>
+// Panels in the running order of a show, as FCJ Heroes settled on: you come up on
+// Standby, you are on the Webcams, then the Draft, and the Match and Teams around the
+// game itself; who won, for the Victory scene, is in Match. Buttons write immediately;
+// anything typed stages until you save.
 export default function Control() {
   return (
     <>
-      <Scores />
+      {/* full width once the bar is two lines (index.css: .mog-jump) */}
+      <BoardBar className="mog-jump-group">
+        <PanelJump className="mog-jump" />
+      </BoardBar>
+      <ScoreBar />
+      {/* first: where a new operator starts, folded for everyone else */}
+      <Help />
+      <Standby />
+      <Cams />
+      <Draft />
       <Match />
+      <Teams />
+      {/* set once at the start of a show, so after what changes during one */}
+      <Tournament />
     </>
   )
 }

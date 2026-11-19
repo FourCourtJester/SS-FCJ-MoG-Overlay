@@ -1,0 +1,105 @@
+/* The camera windows and their name plates. 1920 x 1080. */
+
+.mog-cam {
+  position: absolute;
+}
+
+.mog-cam-fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── A thin brush border along the two clean edges, into one corner ────────────────
+   Two strokes of the kit's thin bar (stroke 08), straddling the window's edges, each
+   fading in from nothing to full strength at the corner they meet in. The fade is the
+   background, a gradient of the colour; the stroke is the mask - so no mask compositing,
+   which an older OBS's Chromium may not do. Drawn over the camera, so OBS's mask still cuts
+   the camera and this sits on top of its edge. */
+.mog-cam-border {
+  --edge: 14px;
+  /* how far each stroke runs on past the corner, so its tapering end hangs outside the
+     window and the corner gets the stroke's solid middle - a brush's overshoot */
+  --edge-over: 44px;
+  --edge-colour: var(--mog-paper);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.mog-cam-edge {
+  position: absolute;
+  height: var(--edge);
+  background: linear-gradient(90deg, transparent, var(--edge-colour) 75%);
+  -webkit-mask: url('../assets/strokes/stroke-08.png') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.5));
+}
+/* bottom-right: along the bottom, left to right, and up the right side, bottom to top.
+   bottom-left is the same, mirrored. */
+.mog-cam-border.bottom-left {
+  scale: -1 1;
+}
+.bottom-right .mog-cam-edge.along,
+.bottom-left .mog-cam-edge.along {
+  left: 0;
+  right: calc(var(--edge-over) * -1);
+  bottom: calc(var(--edge) / -2);
+}
+.bottom-right .mog-cam-edge.up,
+.bottom-left .mog-cam-edge.up {
+  /* a horizontal stroke the window's height long (and the overshoot), its strong end at the
+     bottom-right corner, turned a quarter about that end so it climbs the right edge */
+  right: 0;
+  bottom: calc(var(--edge) / -2 - var(--edge-over));
+  width: calc(var(--window-h) + var(--edge-over));
+  transform-origin: 100% 50%;
+  rotate: 90deg;
+}
+
+/* across the window's bottom edge, half on and half off, at the end the window says
+   (`plate` in components/windows.js): over the scuffed end, out of the way of the border's
+   corner - the pair's outer ends, so they mirror - or centred, as Solo's is */
+.mog-cam-plate {
+  position: absolute;
+  bottom: -38px;
+  isolation: isolate;
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  max-width: 78%;
+  padding: 18px 46px 16px;
+}
+.mog-cam.plate-right .mog-cam-plate {
+  right: 24px;
+}
+.mog-cam.plate-left .mog-cam-plate {
+  left: 24px;
+}
+.mog-cam.plate-center .mog-cam-plate {
+  left: 50%;
+  translate: -50% 0;
+}
+
+.mog-cam-brush {
+  --brush-h: 77px;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.mog-cam.plate-left .mog-cam-brush {
+  scale: -1 1;
+}
+
+.mog-cam-name {
+  font-size: 40px;
+  font-weight: 700;
+  min-width: 0;
+}
+.mog-cam-social {
+  font-family: var(--mog-display);
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  color: var(--mog-orange);
+  white-space: nowrap;
+}

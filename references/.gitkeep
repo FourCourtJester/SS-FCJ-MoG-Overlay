@@ -1,0 +1,15 @@
+# references/
+
+The source art this studio was cut from. It is not in git (it is over a gigabyte, and
+it is not ours to redistribute); only this note is. Get the kits from March of Giants and
+unpack them here, keeping their folder names, then run scripts/assets.sh to re-cut
+src/assets/ from them.
+
+What we used:
+
+- The October Creator Kit, as 10_CREATOR_KIT_ZIP_30SEPT/
+  Logos, graphic signature (masks, strokes, ornaments), key art, fonts, giant portraits,
+  the giants' animated menus, music and backgrounds. scripts/assets.sh reads this folder
+  by name.
+
+- The October In-Game Icons, as MoG_InGame_Icons_2OCT26/

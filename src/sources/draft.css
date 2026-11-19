@@ -1,0 +1,428 @@
+/* The draft. 1920 x 1080. Each side's colours, as the game's: */
+.mog-draft {
+  position: absolute;
+  inset: 0;
+  background: var(--mog-ink);
+}
+/* Behind the slices, gold: it is the gaps between them, the middle one most, that it
+   fills, so they read as gilt edging between the slices, not as a black line down the
+   middle (user, 2026-11-18). Not Victory's storm, tried first and taken back. Brass
+   (mog.css), brightest across the middle and darkening to the top and bottom, as metal
+   catching the light. */
+.mog-draft-gold {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #4a3313 0%,
+    color-mix(in srgb, var(--mog-brass) 80%, #4a3313) 25%,
+    #ecd08e 48%,
+    var(--mog-brass) 60%,
+    color-mix(in srgb, var(--mog-brass) 60%, #4a3313) 80%,
+    #3a2710 100%
+  );
+}
+.mog-slice.left {
+  --team: var(--mog-side-left);
+  --team-bright: var(--mog-side-left-bright);
+  --team-deep: var(--mog-side-left-deep);
+}
+.mog-slice.right {
+  --team: var(--mog-side-right);
+  --team-bright: var(--mog-side-right-bright);
+  --team-deep: var(--mog-side-right-deep);
+}
+
+/* ─── A slice ──────────────────────────────────────────────────────────────────── */
+.mog-slice {
+  position: absolute;
+  top: 0;
+  height: 1080px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--mog-ink);
+}
+
+/* the giant: its loop, 1920 x 1080, slid so the giant is in the middle of the slice.
+   BLUE'S are mirrored about the slice's middle, so the two sides face each other across the
+   vs. The game's loops nearly all face screen left (Elaris's magic, Victoria's flame,
+   Dreadnought's gun, Trench Maw's lunge), so it is blue that turns, to face right; mirroring
+   red, as at first, had both sides looking out to the screen's edges (user, 2026-11-18). */
+.mog-slice-giant {
+  position: absolute;
+  inset: 0;
+}
+.mog-slice.left .mog-slice-giant {
+  scale: -1 1;
+}
+.mog-slice-stage {
+  position: absolute;
+  top: 0;
+  /* a giant's loop is a strip of the frame, 480 wide (scripts/assets.sh: giant) */
+  width: 480px;
+  height: 1080px;
+}
+/* no loop: the portrait, standing on where the matchup band goes */
+.mog-slice-portrait {
+  position: absolute;
+  left: 50%;
+  bottom: 150px;
+  width: 520px;
+  translate: -50% 0;
+}
+/* ─── Opening and shutting (Draft.jsx: Slice) ────────────────────────────────────────
+   OPEN: the board drops away down out of the slice, and the giant behind it rises up the
+   last stretch into place, flaring bright as it comes (user, 2026-11-18: up and down, not
+   only up). SHUT: the board rises back over it. The giant sits still under a shut board,
+   low and bright, ready to rise. 0.7s, the board's travel (Draft.jsx: BOARD_MS). */
+/* Low, it is also 10% larger from its feet up: the loop is only the slice's height, so
+   lowered alone it would leave a black strip across the top of the slice while the board
+   is off it. Grown from the bottom, its top edge stays above the slice's all the way
+   (1080 x 0.1 = 108px up, against 90px down). `transform`, as blue's `scale` mirrors it. */
+.mog-slice-giant {
+  translate: 0 90px;
+  transform: scale(1.1);
+  transform-origin: 50% 100%;
+  filter: brightness(2);
+  transition:
+    translate 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.9s ease-out;
+}
+.mog-slice.open .mog-slice-giant {
+  translate: 0 0;
+  transform: none;
+  filter: brightness(1);
+}
+.mog-slice-wait {
+  transition: translate 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.mog-slice.open .mog-slice-wait {
+  translate: 0 100%;
+}
+/* the name once it is open, after the board has mostly gone; gone at once as it shuts */
+.mog-slice-name {
+  opacity: 0;
+  translate: 0 8px;
+  transition:
+    opacity 0.2s ease-out,
+    translate 0.2s ease-out;
+}
+/* every other slice the other way (Draft.jsx: Slice): the board lifts away UP and the giant
+   comes DOWN into place, grown from its head this time, so its bottom edge stays below the
+   slice's */
+.mog-slice.up .mog-slice-giant {
+  translate: 0 -90px;
+  transform-origin: 50% 0;
+}
+.mog-slice.up.open .mog-slice-giant {
+  translate: 0 0;
+}
+.mog-slice.up.open .mog-slice-wait {
+  translate: 0 -100%;
+}
+.mog-slice.open .mog-slice-name {
+  opacity: 1;
+  translate: 0 0;
+  transition-duration: 0.4s;
+  transition-delay: 0.45s;
+}
+
+/* an empty slice: its side's colour in the dark, and the pick it waits for.
+
+   The dark wood is the kit's Background_01_Dark, the board behind the overlay's panels
+   (mog.css). It is one 1920 x 1080 picture, drawn at that size and slid by the slice's
+   place on screen (--slice-x, Draft.jsx), so the empty slices are windows onto one board.
+   NOT smaller: at 960 wide it is 540 tall and repeats down a 1080 slice, and the joins
+   showed as a hard line across every empty slice (user, 2026-11-18). */
+.mog-slice-wait {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-bottom: 260px;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 40%, color-mix(in srgb, var(--team-deep) 70%, transparent), transparent),
+    url('../assets/backgrounds/planks-dark.webp') calc(-1 * var(--slice-x, 0px)) 0 / 1920px 1080px no-repeat;
+  background-blend-mode: normal, luminosity;
+}
+.mog-slice-wait .mog-type {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: color-mix(in srgb, var(--team-bright) 45%, var(--mog-ash));
+  opacity: 0.8;
+}
+/* the picks up next (Draft.jsx: nextPicks): the kit's knot, the matchup banner's ornament,
+   in the side's colour above the pick's number, breathing slowly. Laid over the board, not
+   in its grid, so the number stays where it is on every slice. The knot is 256x280. */
+.mog-slice-next {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 130px - 30px);
+  width: 64px;
+  height: 70px;
+  translate: -50% -100%;
+  background: color-mix(in srgb, var(--team-bright) 70%, var(--mog-ash));
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  animation: mog-slice-next 1.6s ease-in-out infinite alternate;
+}
+@keyframes mog-slice-next {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+/* the floor of every slice darkened, for its name and the matchup (laid over in OBS) to sit on */
+.mog-slice-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgb(18 13 10 / 0.55) 72%, rgb(18 13 10 / 0.92) 88%);
+}
+
+/* the giant's name, above where the matchup's banner goes */
+.mog-slice-name {
+  position: absolute;
+  inset: auto 0 236px;
+  display: flex;
+  justify-content: center;
+}
+.mog-slice-name .mog-type {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-shadow:
+    0 2px 0 rgb(0 0 0 / 0.6),
+    0 0 18px rgb(0 0 0 / 0.8);
+}
+@keyframes mog-slice-name-in {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+/* The side's colour round the slice: a border, and a soft glow inside it (user,
+   2026-11-18), over everything in the slice */
+.mog-slice-frame {
+  position: absolute;
+  inset: 0;
+  border: 2px solid color-mix(in srgb, var(--team-bright) 75%, transparent);
+  box-shadow:
+    inset 0 0 10px color-mix(in srgb, var(--team-bright) 45%, transparent),
+    inset 0 0 48px color-mix(in srgb, var(--team) 50%, transparent);
+  pointer-events: none;
+}
+.mog-slice.shut .mog-slice-frame {
+  border-color: color-mix(in srgb, var(--team-bright) 35%, transparent);
+}
+
+/* The swell, every 15s (Draft.jsx: --pulse-at): a stronger copy of the glow above, faded
+   up and down over 2s and then held off for the rest of the 15. Its opacity is what
+   moves, not the shadow, so it is cheap to draw. */
+.mog-slice-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset 0 0 16px color-mix(in srgb, var(--team-bright) 60%, transparent),
+    inset 0 0 90px color-mix(in srgb, var(--team) 55%, transparent);
+  opacity: 0;
+  animation: mog-slice-pulse 15s ease-in-out var(--pulse-at, 3s) infinite;
+}
+@keyframes mog-slice-pulse {
+  0%,
+  14%,
+  100% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+}
+
+/* ─── Embers (Embers.jsx), up each half in its side's colour ────────────────────────
+   Over the slices and their frames, under the vs and everything along the bottom; softer than
+   Victory's, as here they cross the giants. */
+.mog-draft-embers {
+  top: 0;
+  bottom: 0;
+  /* each set starts no nearer the middle than 110px, as far as one drifts sideways
+     (Embers.jsx), so none crosses into the other side's half (user, 2026-11-18). Not
+     clipped at the middle instead: one would vanish there mid-rise. */
+  width: 850px;
+  opacity: 0.7;
+}
+.mog-draft-embers.left {
+  left: 0;
+  --team-bright: var(--mog-side-left-bright);
+}
+.mog-draft-embers.right {
+  right: 0;
+  --team-bright: var(--mog-side-right-bright);
+}
+
+/* ─── Along the bottom ─────────────────────────────────────────────────────────────── */
+.mog-draft-floor {
+  position: absolute;
+  inset: auto 0 0;
+  height: 200px;
+  background: linear-gradient(180deg, transparent, rgb(18 13 10 / 0.7));
+  pointer-events: none;
+}
+
+/* Each side's bans, at the foot of its outermost slice, beside where the Matchup source's band lands
+   when laid over this one in OBS (1350px wide, centred, 40px up, leaving 285px each
+   side), level with it: 96px tall, as the band is. */
+.mog-bans {
+  --team-bright: var(--mog-side-left-bright);
+  --team: var(--mog-side-left);
+  position: absolute;
+  bottom: 40px;
+  /* centred under the outermost slice (user, 2026-11-18): its width, 235px (Draft.jsx: W) */
+  width: 235px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: mog-slice-name-in 0.4s ease-out both;
+}
+.mog-bans.left {
+  left: 0;
+}
+.mog-bans.right {
+  --team-bright: var(--mog-side-right-bright);
+  --team: var(--mog-side-right);
+  right: 0;
+}
+.mog-bans > .mog-type {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--mog-ash);
+  text-shadow: 0 2px 4px rgb(0 0 0 / 0.8);
+}
+.mog-bans-row {
+  display: flex;
+  gap: 10px;
+}
+.mog-bans.right .mog-bans-row {
+  flex-direction: row-reverse;
+}
+
+/* a ban: the giant's head, greyed and dimmed, struck through in the side's colour */
+.mog-ban {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  overflow: hidden;
+  background: var(--mog-soot);
+  border: 2px solid color-mix(in srgb, var(--team-bright) 60%, transparent);
+  box-shadow: 0 6px 14px rgb(0 0 0 / 0.55);
+}
+.mog-ban img {
+  position: absolute;
+  max-width: none;
+  filter: grayscale(1) brightness(0.7) contrast(1.1);
+}
+.mog-ban-strike {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent calc(50% - 3px),
+    color-mix(in srgb, var(--team-bright) 85%, transparent) calc(50% - 3px),
+    color-mix(in srgb, var(--team-bright) 85%, transparent) calc(50% + 3px),
+    transparent calc(50% + 3px)
+  );
+}
+.mog-bans.right .mog-ban-strike {
+  scale: -1 1;
+}
+/* a ban not made yet: an outline, waiting */
+.mog-ban.empty {
+  background: rgb(18 13 10 / 0.6);
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--team-bright) 35%, transparent);
+}
+/* ─── The "vs": the charge icon, over the middle gap ──────────────────────────────────
+   Centred on the gap between the sides (x 960), low, standing just above the giants' names
+   and so above the matchup's banner, which starts at y 877 (user, 2026-11-18: moved down
+   from halfway up the slices, and 10% smaller, 216px from 240). Not any lower: there it
+   sits across the two middle giants' names. A hard shadow under it, dropped a few
+   pixels as the plates' type is, and a soft one round it, to stand it off any giant. */
+.mog-draft-vs {
+  position: absolute;
+  left: 960px;
+  top: 716px;
+  width: 216px;
+  translate: -50% -50%;
+  filter: drop-shadow(0 7px 0 rgb(18 13 10 / 0.85)) drop-shadow(0 0 26px rgb(18 13 10 / 0.9));
+  animation: mog-draft-vs-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.mog-draft-vs img {
+  display: block;
+  width: 100%;
+}
+/* while the scene first comes up (Draft.jsx: Versus), still */
+.mog-draft-vs.held,
+.mog-draft-vs.held img {
+  animation: none;
+}
+/* a pick: it swells and settles, and flares bright as it does */
+@keyframes mog-draft-vs-pop {
+  0% {
+    scale: 1;
+  }
+  35% {
+    scale: 1.28;
+  }
+  100% {
+    scale: 1;
+  }
+}
+.mog-draft-vs img {
+  animation: mog-draft-vs-flare 0.55s ease-out both;
+}
+@keyframes mog-draft-vs-flare {
+  0%,
+  100% {
+    filter: none;
+  }
+  35% {
+    filter: brightness(1.6) drop-shadow(0 0 14px rgb(255 240 210 / 0.8));
+  }
+}
+
+/* the side's colour, over the white for the top of the pop: the icon's own shape, filled
+   with the colour, faded in and out again */
+.mog-draft-vs.left {
+  --team-bright: var(--mog-side-left-bright);
+}
+.mog-draft-vs.right {
+  --team-bright: var(--mog-side-right-bright);
+}
+.mog-draft-vs-tint {
+  position: absolute;
+  inset: 0;
+  background: var(--team-bright);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  opacity: 0;
+  animation: mog-draft-vs-tint 0.55s ease-out both;
+}
+@keyframes mog-draft-vs-tint {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

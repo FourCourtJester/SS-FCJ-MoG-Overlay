@@ -2,3 +2,20 @@ node_modules
 dist
 .env
 .env.local
+
+# Source art: the October Creator Kit and In-Game Icons (1.1 GB). scripts/assets.sh cuts
+# what the graphics use into src/assets/. Only the folder's note is in git, saying what
+# goes there.
+references/*
+!references/.gitkeep
+
+# Video. What goes in git goes as WebM (user, 2026-11-18): Standby's key art loop, and the
+# giants' menu loops, each cut to a strip for the draft's slices. Not any trailer, being
+# minutes long. Re-cut all of it from the creator kit with scripts/assets.sh.
+src/assets/video/*
+!src/assets/video/standby/
+src/assets/video/standby/*
+!src/assets/video/standby/00-keyart.webm
+!src/assets/video/giants/
+src/assets/video/giants/*
+!src/assets/video/giants/*.webm

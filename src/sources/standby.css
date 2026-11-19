@@ -1,0 +1,91 @@
+.mog-standby {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.mog-standby-slides {
+  position: absolute;
+  inset: 0;
+}
+
+/* darker at the top for the plates and at the bottom for the matchup; the middle is the
+   picture's */
+.mog-standby-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(18 13 10 / 0.6), transparent 22%, transparent 62%, rgb(18 13 10 / 0.85)),
+    radial-gradient(ellipse at 50% 45%, transparent 55%, rgb(18 13 10 / 0.55));
+}
+
+/* ─── the two plates, hanging from the top edge ─────────────────────────────────── */
+
+.mog-standby-plate {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: absolute;
+  top: 0;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  height: 120px;
+  padding: 8px 56px 22px;
+}
+.mog-standby-brush {
+  --brush-h: 144px;
+  position: absolute;
+  inset: -24px 0 0;
+  z-index: -1;
+}
+
+/* Left: the wordmark and the message, anchored to the top-left corner whatever else is
+   up. The plate runs off the left edge, so its brushed end is out of frame and the
+   wordmark sits close in the corner. */
+.mog-standby-message {
+  left: -40px;
+  padding-left: 68px;
+}
+
+.mog-standby-logo {
+  flex: none;
+  width: 190px;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.5));
+}
+.mog-standby-text {
+  max-width: 340px;
+  font-size: 30px;
+  letter-spacing: 0.1em;
+  line-height: 1.15;
+  color: var(--mog-paper);
+}
+/* the message plate with nothing to say is the wordmark alone */
+.mog-standby-text:empty {
+  display: none;
+}
+
+/* Right: the clock. Off the right edge until a countdown starts, sliding in from the
+   side it hangs on and back out when it ends (user, 2026-11-17). */
+.mog-standby-clock {
+  right: -40px;
+  padding-right: 68px;
+  /* the label centred on the digits, and both on the same line as the message plate's
+     contents across the screen (user, 2026-11-17); was baselines, 22px lower */
+  translate: 110% 0;
+  transition: translate 0.8s var(--ease);
+}
+.mog-standby-clock .mog-standby-brush {
+  scale: -1 1;
+}
+.has-clock .mog-standby-clock {
+  translate: 0 0;
+}
+.mog-standby-label {
+  font-size: 34px;
+  color: var(--mog-orange);
+}
+.mog-standby-timer {
+  min-width: 4ch;
+  font-size: 72px;
+  font-weight: 700;
+}

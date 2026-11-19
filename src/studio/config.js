@@ -4,10 +4,10 @@
  * The name people see.
  *
  * It titles the board, and OBS shows it in front of every browser source this
- * studio publishes -- `SS - My Studio - Lower Thirds / Single`. Change it whenever
+ * studio publishes -- `SS - FCJ MoG Overlay - Lower Thirds / Single`. Change it whenever
  * you like: it is a label and nothing reads it back.
  */
-export const STUDIO_NAME = 'My Studio'
+export const STUDIO_NAME = 'FCJ MoG Overlay'
 
 /**
  * The name this studio's data is stored under.
@@ -19,4 +19,4 @@ export const STUDIO_NAME = 'My Studio'
  * Separate from `STUDIO_NAME` for that reason: retitling a show on air should not
  * be the same act as filing it somewhere new.
  */
-export const STUDIO_ID = 'my-studio'
+export const STUDIO_ID = 'ss-fcj-mog-overlay'

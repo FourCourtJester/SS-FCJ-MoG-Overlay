@@ -1,0 +1,162 @@
+/* The matchup band. Sizes are for a 1920 x 1080 scene. */
+
+.mog-matchup {
+  --band-h: 96px;
+  --side-w: 600px;
+  --score-w: 104px;
+  --gap: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* the banner close over the teams (user, 2026-11-17); was 10px */
+  gap: 2px;
+}
+
+.mog-matchup-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--gap);
+  position: relative;
+}
+
+.mog-matchup-knot {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 62px;
+  translate: -50% -50%;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.6));
+  opacity: 0.92;
+}
+
+/* the tournament's logo between the scores: a square one fills the gap, a wide one is
+   contained in it, smaller */
+.mog-matchup-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 2px 8px rgb(0 0 0 / 0.6));
+}
+.mog-matchup-mark.square {
+  /* the band's own height, so it does not reach up into the banner sitting over it */
+  width: 96px;
+  height: 96px;
+}
+.mog-matchup-mark.wide {
+  width: 136px;
+  height: 64px;
+}
+
+.mog-side {
+  display: flex;
+  gap: 8px;
+  width: var(--side-w);
+  height: var(--band-h);
+  filter: drop-shadow(0 6px 14px rgb(0 0 0 / 0.55));
+}
+.mog-side.right {
+  flex-direction: row-reverse;
+}
+
+.mog-side-plate {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 40px 4px 28px;
+  min-width: 0;
+}
+.mog-side.right .mog-side-plate {
+  flex-direction: row-reverse;
+  padding: 0 28px 4px 40px;
+}
+
+.mog-side-brush {
+  position: absolute;
+  inset: 0 -12px;
+  z-index: -1;
+}
+.mog-side.right .mog-side-brush {
+  scale: -1 1;
+}
+
+.mog-side-logo {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+}
+.mog-side-logo-img {
+  width: 100%;
+  height: 100%;
+}
+
+.mog-side-name {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  font-size: 46px;
+  font-weight: 700;
+  padding-bottom: 6px;
+}
+.mog-side.right .mog-side-name {
+  text-align: right;
+}
+
+.mog-side-score {
+  position: relative;
+  flex: none;
+  width: var(--score-w);
+  display: grid;
+  place-items: center;
+  font-size: 66px;
+  font-weight: 700;
+}
+/* the side's colour, brushed on in charcoal: the plate's grain shows through it */
+.mog-side-swatch {
+  position: absolute;
+  inset: -4px -10px -6px;
+}
+.mog-side.left .mog-side-swatch {
+  --stroke-colour: var(--mog-side-left);
+}
+.mog-side.right .mog-side-swatch {
+  --stroke-colour: var(--mog-side-right);
+  scale: -1 1;
+}
+.mog-side-score .mog-type {
+  position: relative;
+  padding-top: 4px;
+  text-shadow: 0 3px 0 rgb(0 0 0 / 0.4);
+}
+
+.mog-logo-empty {
+  opacity: 0.35;
+}
+
+/* the round and the series, hung above the band */
+.mog-kicker {
+  --brush-h: 65px;
+  /* 64px a side keeps the text inside the solid part of the stroke, clear of its ragged,
+     fading ends. 11px over and 15px under sits the text 3px higher than it was, which reads
+     as centred in the stroke (user, 2026-11-17); the banner is the same height. */
+  padding: 11px 64px 15px;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  background: var(--mog-orange);
+}
+.mog-kicker .mog-type {
+  color: var(--mog-ink);
+  font-weight: 700;
+}
+.mog-kicker-sep::before {
+  content: '·';
+  margin: 0 0.6em;
+}
