@@ -76,7 +76,7 @@ function Ban({ name, label, taken }) {
   )
 }
 
-// One side: its two bans, side by side from the board's 511px line (index.css:
+// One side: its two bans, side by side from the bar's two-line point (index.css:
 // .mog-ban-pair), then its picks (user, 2026-11-18: bans above, as they come
 // first in a draft), in a frame of its colour (index.css: .mog-picks) -
 // an even grid of tiles, fewer to a row as the board narrows.

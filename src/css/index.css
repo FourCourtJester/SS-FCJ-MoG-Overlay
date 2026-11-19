@@ -33,25 +33,33 @@
   font-size: 1rem;
 }
 
-/* The jump menu: under 511px the bar is two lines, the menu over the score, so the menu
-   takes its whole line rather than sitting short at the left of it, and the score sits
-   in the middle of the line under it rather than at the right (user, 2026-11-17).
-   The window's width, not a container's: the bar is the window's width, dock or not. */
-/* A side's two bans on the Draft panel: side by side, one above the other only under the
-   same 511px line as the bar (user, 2026-11-18) - a studio Row would stack them until a
-   much wider board. */
-.mog-ban-pair {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-}
-@media (max-width: 510.98px) {
-  .mog-ban-pair {
-    grid-template-columns: minmax(0, 1fr);
-  }
+/* A side of the score: its stepper and its name, kept together when the bar wraps. */
+.mog-score-side {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-@media (max-width: 510.98px) {
+/* The bar as a container, so a rule can ask how wide the bar itself is. A media query
+   asks about the window, and counts a scrollbar as room - and the scrollbar is no one
+   number: 17px on Windows before core 0.18.1, about 13px since (thin), none on a short
+   board or with overlay scrollbars (user, 2026-11-19). The bar's width is the same in
+   every case. */
+.ss-board-bar {
+  container: mog-bar / inline-size;
+}
+
+/* TWO LINES: once the jump menu and the score no longer fit side by side, the menu takes
+   the whole first line rather than sitting short at the left of it, and the score sits in
+   the middle of the line under it rather than wrapped to the right (user, 2026-11-17).
+
+   The point is the jump, its gap and the score: 122 + 12 + 346.7 = 480.7px measured in
+   Chromium on Linux (2026-11-19). The jump is a native <select>, as wide as its longest
+   option - the longest panel title, "Tournament" - and a select draws a little wider on
+   Windows, where the user's own check put it at a 511.2px window, 487.2px of bar. The
+   larger of the two, so neither leaves the score wrapped and uncentred; a few pixels early
+   costs nothing. Re-measure if a panel's title grows. */
+@container mog-bar (max-width: 487.2px) {
   .mog-jump-group {
     flex-basis: 100%;
   }
@@ -64,25 +72,27 @@
   }
 }
 
-/* A side of the score: its stepper and its name, kept together when the bar wraps. */
-.mog-score-side {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+/* A side's two bans on the Draft panel: side by side, one above the other only from the
+   bar's two-line point (user, 2026-11-18) - a studio Row would stack them until a much
+   wider board. Asked of the side's frame (.mog-picks, a container for its pick grid,
+   below), which is 52px narrower than the bar's content (the board's, the panel's and the
+   frame's padding and borders), so 487.2px there is 435.2px here. */
+.mog-ban-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
 }
-
-/* The bar as a container, so a rule can ask how wide the bar itself is. A media query
-   asks about the window, and counts a scrollbar as room: the 17px one Windows gives a long
-   board put the score's real limit at 388px there, against 371px without one (user,
-   2026-11-19). */
-.ss-board-bar {
-  container: mog-bar / inline-size;
+@container (max-width: 435.2px) {
+  .mog-ban-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* When the score's one line no longer fits the bar (user, 2026-11-19), each side takes a
    line of its own, centred, and the bar is three lines: the menu, blue, red. The line is
    346.7px in Inter (two steppers, two names, "vs" and the gaps), so this is the bar's own
-   width, scrollbar or none - a 371px window without one, 388px with Windows'. Re-measure
+   width, scrollbar or none - a 371px window without one, 384px with core 0.18.1's thin
+   scrollbar, 388px with Windows' old one. Re-measure
    if the steppers or names change. "vs" goes, with nothing beside it to be versus. Both
    lines read name then score, blue's name moved in front of its stepper to match red's,
    and the names are one width, so the two steppers sit one above the other. */
